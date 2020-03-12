@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/colorAccent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@color/alertPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/Mac_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mac_Addres Device"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/Nama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Mac_"
+            android:layout_marginTop="10dp"
+            android:hint="Nama Device"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:textStyle="normal" />
+        <Button
+            android:id="@+id/AddZona"
+            android:layout_width="120dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/Nama"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_ui"
+            android:text="Tambah Zona"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:textStyle="normal" />
+        <Button
+            android:id="@+id/tampilanZona"
+            android:layout_width="120dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/AddZona"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_ui"
+            android:text="Lihat Zona"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:textStyle="normal" />
+        <Button
+            android:id="@+id/siram"
+            android:layout_width="120dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/tampilanZona"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_ui"
+            android:text="Siram Manual"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:textStyle="normal" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
