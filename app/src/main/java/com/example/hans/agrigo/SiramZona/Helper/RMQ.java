@@ -1,4 +1,4 @@
-package com.example.hans.agrigo.DaftarZona.Helper;
+package com.example.hans.agrigo.SiramZona.Helper;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.hans.agrigo.DaftarZona.GlobalVariablee.GlobalVariable;
+import com.example.hans.agrigo.SiramZona.GlobalVariablee.GlobalVariableJadwal;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -25,19 +25,17 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeoutException;
 
-
-public class RabbitMq {
-    GlobalVariable gb = new GlobalVariable();
+public class RMQ {
+    GlobalVariableJadwal gbJadwal = new GlobalVariableJadwal();
     ConnectionFactory factory = new ConnectionFactory();
-
     /**
      * Function Connect To RMQ
      */
     public void setupConnectionFactory() {
         try {
             factory.setAutomaticRecoveryEnabled(false);
-            factory.setUri("amqp://"+gb.userQueue()+":"+gb.passQueue()+"@"+gb.host());
-            factory.setVirtualHost(gb.vhostRep());
+            factory.setUri("amqp://"+gbJadwal.userQueue()+":"+gbJadwal.passQueue()+"@"+gbJadwal.host());
+            factory.setVirtualHost(gbJadwal.vhostRep());
         } catch (KeyManagementException | NoSuchAlgorithmException | URISyntaxException e1) {
             e1.printStackTrace();
         }
@@ -65,33 +63,23 @@ public class RabbitMq {
      * @throws InterruptedException
      */
     public  void  publish(String message) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException, InterruptedException {
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         Connection connection = factory.newConnection();
+
         Log.d("ConnectionRMQ", "publish: "+connection.isOpen());
         Channel channel = connection.createChannel();
         Log.d("ChannelRMQ", "publish: "+channel.isOpen());
         String messageOn = message ;
-        channel.basicPublish(gb.exchange(), gb.queueReport(),null,messageOn.getBytes());
-
-    }
-
-    public  void  publishJadwal(String message) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException, InterruptedException {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Connection connection = factory.newConnection();
-        Log.d("ConnectionRMQ", "jadwal: "+connection.isOpen());
-        Channel channel = connection.createChannel();
-        Log.d("ChannelRMQ", "jadwal: "+channel.isOpen());
-        String messageOn = message ;
-        channel.basicPublish(gb.exchange(), gb.queueReport(),null,messageOn.getBytes());
+        channel.basicPublish(gbJadwal.exchange(), gbJadwal.queueReport(),null,messageOn.getBytes());
 
     }
 
     public void SendSpeed() throws InterruptedException {
         Thread.sleep(500); //0.5 sec
     }
-
     /**
      * Fungsi untuk subscribe data RMQ
      * @param handler

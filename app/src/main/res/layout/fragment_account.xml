@@ -107,25 +107,25 @@
 <!--            android:textColor="#fff"-->
 <!--            android:textStyle="bold" />-->
 
-        <Button
-            android:id="@+id/btn_jadwal"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_ui"
-            android:text="Lihat Lahan"
-            android:textColor="#fff"
-            android:textStyle="bold" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_jadwal"-->
+<!--            android:layout_width="240dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@drawable/bg_ui"-->
+<!--            android:text="Lihat Lahan"-->
+<!--            android:textColor="#fff"-->
+<!--            android:textStyle="bold" />-->
 
-        <Button
-            android:id="@+id/btn_siram"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_ui"
-            android:text="SIRAM LAHAN"
-            android:textColor="#fff"
-            android:textStyle="bold" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_siram"-->
+<!--            android:layout_width="240dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@drawable/bg_ui"-->
+<!--            android:text="SIRAM LAHAN"-->
+<!--            android:textColor="#fff"-->
+<!--            android:textStyle="bold" />-->
 
         <Button
             android:id="@+id/btn_tentang"

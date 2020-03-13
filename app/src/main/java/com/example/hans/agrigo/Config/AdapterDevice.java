@@ -7,20 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hans.agrigo.DaftarZona.SiramZona;
+import com.example.hans.agrigo.Fragment.SearchFragment;
 import com.example.hans.agrigo.LihatZona.LihatZona;
+import com.example.hans.agrigo.Menu.Tampil_history;
 import com.example.hans.agrigo.R;
 import com.example.hans.agrigo.SetZona.SetZona;
 
 import java.util.List;
 
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
+
 public class AdapterDevice extends RecyclerView.Adapter<AdapterDevice.MyViewHolder> {
     Context context;
     List<Item_Device> menu;
-
+//    String watering,Watering;
     public AdapterDevice(Context context, List<Item_Device> data_menu) {
         this.context = context;
         this.menu= data_menu;
@@ -37,20 +41,35 @@ public class AdapterDevice extends RecyclerView.Adapter<AdapterDevice.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // Set widget
         holder.nama.setText(menu.get(position).getNama());
-        holder.harga.setText(menu.get(position).getMac());
-//        final String urlGambar = InitRetrofit.BASE_URL+"../Images/" + menu.get(position).getFoto();
-//        Picasso.with(context).load(urlGambar).into(holder.gambarmenu);
+        String a = holder.nama.getText().toString();
+//        holder.nama.getText().toString();
+        if (a.equals("watering") || a.equals("Watering")) {
+            holder.history.setVisibility(View.GONE);
+        } else if (a.equals("sensor") || a.equals("Sensor")) {
+            holder.add.setVisibility(View.GONE);
+            holder.zona.setVisibility(View.GONE);
+        }
+
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
+
                 Intent varIntent = new Intent(context, SetZona.class);
                 varIntent.putExtra("mac", menu.get(position).getMac());
                 context.startActivity(varIntent);
             }
         });
-
-        holder.view.setOnClickListener(new View.OnClickListener() {
+//        holder.history.setVisibility(View.VISIBLE);
+        holder.history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//
+                Intent varIntent = new Intent(context, Tampil_history.class);
+                varIntent.putExtra("mac", menu.get(position).getMac());
+                context.startActivity(varIntent);
+            }
+        });
+        holder.zona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //
@@ -60,15 +79,6 @@ public class AdapterDevice extends RecyclerView.Adapter<AdapterDevice.MyViewHold
             }
         });
 
-        holder.siram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//
-                Intent varIntent = new Intent(context, SiramZona.class);
-                varIntent.putExtra("mac", menu.get(position).getMac());
-                context.startActivity(varIntent);
-            }
-        });
     }
 
     @Override
@@ -77,16 +87,15 @@ public class AdapterDevice extends RecyclerView.Adapter<AdapterDevice.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView nama,harga;
-        Button add, view, siram;
-
+        TextView nama, hem;
+        Button add, history,zona;
         public MyViewHolder(View itemView) {
             super(itemView);
             nama = (TextView) itemView.findViewById(R.id.Nama);
-            harga = (TextView) itemView.findViewById(R.id.Mac_);
             add = (Button) itemView.findViewById( R.id.AddZona );
-            view = (Button) itemView.findViewById( R.id.tampilanZona );
-            siram = (Button) itemView.findViewById( R.id.siram);
+            zona=(Button)itemView.findViewById(R.id.lihatZona);
+            history = (Button) itemView.findViewById( R.id.history );
+            history.setVisibility(View.VISIBLE);
 
         }
     }

@@ -20,8 +20,6 @@ public class Item_Device {
         return mac;
     }
 
-
-
     public void setNama(String nama){
 
         this.nama = nama;
@@ -30,6 +28,7 @@ public class Item_Device {
     public String getNama(){
         return nama;
     }
+
     @Override
     public String toString(){
         return

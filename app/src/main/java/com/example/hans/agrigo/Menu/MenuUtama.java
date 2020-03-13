@@ -75,9 +75,9 @@ public class MenuUtama extends AppCompatActivity
                     fragment = new SearchFragment();
                     fragment.setArguments(data);
                     break;
-                case R.id.favorite_menu:
-                    fragment = new FavoriteFragment();
-                    break;
+//                case R.id.favorite_menu:
+//                    fragment = new FavoriteFragment();
+//                    break;
                 case R.id.account_menu:
                     data.putString(AccountFragment.KEY_ACTIVITY, email);
                     data.putString(AccountFragment.KEY_ACTIVITY1, name);

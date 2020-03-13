@@ -109,7 +109,18 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
             if (result.getContents() == null) {
                 Toast.makeText(this, "Device tidak ditemukan, Ulangi Kembali ", Toast.LENGTH_SHORT).show();
             } else {
+//                prefZona.saveSPString(SharePrefZona.SP_MAC, result.getContents());
                 Mac_Addres=result.getContents();
+//                String mac1=prefZona.getSP_Mac();
+//                String mac2=prefZona.getSP_Mac2();
+//                String mac3=prefZona.getSP_Mac3();
+//                String mac4=prefZona.getSP_Mac4();
+//                if (mac1.equals(result.getContents())){
+//                    prefZona.saveSPString(SharePrefZona.SP_MAC, result.getContents());
+//                }else {
+//                    prefZona.saveSPString(SharePrefZona.SP_MAC2, result.getContents());
+//                }
+////                Toast.makeText(this, ""+prefZona.getSP_Mac(), Toast.LENGTH_SHORT).show();
                 getMac();
             }
         } else {
@@ -179,7 +190,10 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
     }
 
     private void RegisterDevice() {
-        String Id=sharedPrefManager.getSpId();
+        String userId=sharedPrefManager.getSpId();
+        String guid=sharedPrefManager.getSpGuid();
+        Log.i("giud",sharedPrefManager.getSpGuid());
+//        Toast.makeText(this, ""+sharedPrefManager.getSpGuid(), Toast.LENGTH_SHORT).show();
         String d_mac =Mac_Addres;
         int code = (int) ((new Date().getTime() / 1000L)%Integer.MIN_VALUE);
         if(Type.equals("Sensor")||Type.equals("sensor")){
@@ -191,14 +205,12 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
             Log.i("ini tipenya",Type);
         }
         String d_code = RandomCode;
-        String Lat=Latitude;
-        String Long=Longitude;
         if (d_code.equals("")) {
             showSnackbar();
         } else if (d_mac.equals("")) {
             showSnackbar();
         } else {
-            retrofit2.Call<ResponseBody> call = InitRetrofit.getInstance().getApi().Aktivasi_Device(d_mac,d_code,Id,Lat,Long);
+            retrofit2.Call<ResponseBody> call = InitRetrofit.getInstance().getApi().Aktivasi_Device(userId,d_mac,d_code,guid);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -208,7 +220,7 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
                             JSONObject jsonRESULTS = new JSONObject(response.body().string());
                             if (jsonRESULTS.getString("msg").equals("Berhasil")){
                                 Toast.makeText(AddDevice.this, "Aktivasi Device Berhasil :)", Toast.LENGTH_SHORT).show();
-                                publishtrue();
+//                                publishtrue();
                                 Intent intent=new Intent(AddDevice.this,MenuUtama.class);
                                 startActivity(intent);
                                 finish();
@@ -222,16 +234,16 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        } catch (TimeoutException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (KeyManagementException e) {
-                            e.printStackTrace();
+//                        } catch (NoSuchAlgorithmException e) {
+//                            e.printStackTrace();
+//                        } catch (URISyntaxException e) {
+//                            e.printStackTrace();
+//                        } catch (TimeoutException e) {
+//                            e.printStackTrace();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        } catch (KeyManagementException e) {
+//                            e.printStackTrace();
                         }
                     } else {
                         Toast.makeText(AddDevice.this, "Gagal,Ulangi Kembali :(", Toast.LENGTH_SHORT).show();

@@ -37,9 +37,8 @@ public interface NetworkService {
     );
 
     @FormUrlEncoded
-    @POST("device/tambahzona")
+    @POST("ambil/zona")
     Call<ResponseBody> regisZona(
-            @Field("email") String email,
             @Field("mac") String mac,
             @Field("zona_name") String namaZona,
             @Field("zona_number") String nomorZona
@@ -71,12 +70,12 @@ public interface NetworkService {
 //    aktivasi device
     @FormUrlEncoded
     @POST("device/aktivasi")
-    Call<ResponseBody>Aktivasi_Device (
-        @Field("mac") String d_mac,
-        @Field("deviceCode") String d_code,
-        @Field("userId") String Id,
-        @Field("lat") String Lat,
-        @Field("long") String Long);
+    Call<ResponseBody>Aktivasi_Device(
+            @Field("userId") String UserId,
+            @Field("mac") String d_mac,
+            @Field("deviceCode") String d_code,
+            @Field("guid") String guid
+    );
 
     @FormUrlEncoded
     @POST("ambil/userLogin")
@@ -85,9 +84,8 @@ public interface NetworkService {
     );
 
     @FormUrlEncoded
-    @POST("device/getzonabydevices")
-    Call<ResponZona>TampilZona(
-            @Field("email") String d_mail,
+    @POST("ambil/getZona")
+    Call<ResponseBody>TampilZona(
             @Field("mac") String mac
     );
 
@@ -95,6 +93,22 @@ public interface NetworkService {
     @POST("ambil/findMac")
     Call<ResponseBody>getmac(
             @Field("mac") String d_macA
+    );
+
+    @FormUrlEncoded
+    @POST("ambil/waterlev")
+    Call<ResponseBody>level(
+            @Field("mac") String d_mac
+    );
+    @FormUrlEncoded
+    @POST("ambil/soil")
+    Call<ResponseBody>soil(
+            @Field("mac") String d_mac
+    );
+    @FormUrlEncoded
+    @POST("ambil/waterflow")
+    Call<ResponseBody>flow(
+            @Field("mac") String d_mac
     );
 }
 

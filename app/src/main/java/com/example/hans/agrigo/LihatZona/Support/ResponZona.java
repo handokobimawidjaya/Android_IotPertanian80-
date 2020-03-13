@@ -6,15 +6,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ResponZona {
-    @SerializedName("result")
+    @SerializedName("device")
     private List<Item_Zona> menu;
-    @SerializedName("sukses")
+    @SerializedName("status")
     private boolean status;
     public void setMenu(List<Item_Zona> menu) {
         this.menu = menu;
     }
 
-    public List<Item_Zona> getMenu()
+    public List<Item_Zona> getZona()
     {
         return menu;
     }
@@ -25,7 +25,6 @@ public class ResponZona {
     }
 
     public boolean isStatus(){
-
         return status;
     }
 

@@ -15,11 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.hans.agrigo.DaftarZona.InputLahan;
-import com.example.hans.agrigo.DaftarZona.SiramZona;
-import com.example.hans.agrigo.LihatZona.LihatZona;
-import com.example.hans.agrigo.Mapping.GetLatLong;
-import com.example.hans.agrigo.MenuJadwal.AturJadwalSiram;
+import com.example.hans.agrigo.SiramZona.SiramZona;
 import com.example.hans.agrigo.MenuLogin.Login;
 import com.example.hans.agrigo.R;
 import com.example.hans.agrigo.Storage.SharedPrefManager;
@@ -39,7 +35,7 @@ public class AccountFragment extends Fragment {
     String email, name, name2;
     TextView txtEmail;
     TextView txtUsername;
-    Button btnLogout, btnTentang, btnJadwal, btnSiram;
+    Button btnLogout, btnTentang, btnSiram;
 
     @Nullable
     @Override
@@ -50,9 +46,9 @@ public class AccountFragment extends Fragment {
         txtEmail = (TextView) view.findViewById(R.id.txt_email);
         txtUsername = (TextView) view.findViewById(R.id.txt_name);
         btnLogout = (Button) view.findViewById(R.id.btn_logout);
-        btnJadwal = (Button) view.findViewById(R.id.btn_jadwal);
+//        btnJadwal = (Button) view.findViewById(R.id.btn_jadwal);
         btnTentang = (Button) view.findViewById(R.id.btn_tentang);
-        btnSiram = (Button) view.findViewById(R.id.btn_siram);
+//        btnSiram = (Button) view.findViewById(R.id.btn_siram);
         tampil_datauser();
 
 //        try {
@@ -80,23 +76,23 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        btnJadwal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), LihatZona.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+//        btnJadwal.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(getActivity(), LihatZona.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
 
-        btnSiram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent tampil = new Intent(getActivity(), SiramZona.class);
-                startActivity(tampil);
-                getActivity().finish();
-            }
-        });
+//        btnSiram.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent tampil = new Intent(getActivity(), SiramZona.class);
+//                startActivity(tampil);
+//                getActivity().finish();
+//            }
+//        });
 
         btnTentang.setOnClickListener(new View.OnClickListener() {
             @Override

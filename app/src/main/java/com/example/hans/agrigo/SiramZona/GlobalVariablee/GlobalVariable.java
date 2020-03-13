@@ -1,21 +1,17 @@
-package com.example.hans.agrigo.DaftarZona.GlobalVariablee;
+package com.example.hans.agrigo.SiramZona.GlobalVariablee;
 
 import android.content.SharedPreferences;
 
-public class GlobalVariableJadwal {
+public class GlobalVariable {
     SharedPreferences pref;
     String prov,guid,tlp;
     String routingKey = "dc:4f:22:7e:3f:fd";
-    String queue_name_publish ="jadwal";
+    String queue_name_publish ="mqtt-subscription-"+routingKey+"qos0";
+
     /**
      * get Value Queue RMQ
      * @return
      */
-    public String getRoutingKey(){
-        String rk = routingKey;
-        return rk;
-    }
-
     public String queueReport(){
         String queue =queue_name_publish;
         return queue;
@@ -26,7 +22,7 @@ public class GlobalVariableJadwal {
      * @return
      */
     public String userQueue(){
-        String userQueue="iot_pertanian";
+        String userQueue="shadoofpertanian";
         return userQueue;
     }
 
@@ -35,7 +31,7 @@ public class GlobalVariableJadwal {
      * @return
      */
     public String passQueue(){
-        String passQueue="iotpertanian";
+        String passQueue="TaniBertani19";
         return passQueue;
     }
 
@@ -44,7 +40,7 @@ public class GlobalVariableJadwal {
      * @return
      */
     public String host(){
-        String hostname ="167.205.7.226";
+        String hostname ="shadoofpertanian.pptik.id";
 //                "167.205.7.226";
 //                "rmq2.pptik.id";
         return hostname;
@@ -56,7 +52,7 @@ public class GlobalVariableJadwal {
      */
 
     public String vhostRep(){
-        String vhost="/iotpertanian";
+        String vhost="/shadoofpertanian";
         return vhost;
     }
 
@@ -71,3 +67,4 @@ public class GlobalVariableJadwal {
     }
 
 }
+

@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">worker1.server.pptik.id</domain>
         <domain includeSubdomains="true">192.168.43.201</domain>
+        <domain includeSubdomains="true">192.168.12.100</domain>
     </domain-config>
 </network-security-config>

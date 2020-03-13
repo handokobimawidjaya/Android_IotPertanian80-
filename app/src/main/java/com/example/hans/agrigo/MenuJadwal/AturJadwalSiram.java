@@ -12,24 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.hans.agrigo.DaftarZona.GlobalVariablee.GlobalVariable;
-import com.example.hans.agrigo.DaftarZona.GlobalVariablee.GlobalVariableJadwal;
-import com.example.hans.agrigo.DaftarZona.Helper.RMQ;
-import com.example.hans.agrigo.DaftarZona.Helper.RabbitMq;
-import com.example.hans.agrigo.DaftarZona.SiramZona;
+import com.example.hans.agrigo.SiramZona.GlobalVariablee.GlobalVariableJadwal;
+import com.example.hans.agrigo.SiramZona.Helper.RMQ;
 import com.example.hans.agrigo.LihatZona.LihatZona;
 import com.example.hans.agrigo.Menu.MenuUtama;
 import com.example.hans.agrigo.R;
 import com.example.hans.agrigo.Storage.SharedPrefManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -45,7 +38,7 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
     SharedPrefManager sharedPrefManager;
-    TextView edtJam, edtMenit, txtUlang, txtUlang1, txtUlang2, txtUlang3, txtNama, txtMac;
+    TextView edtJam, edtMenit, txtUlang, txtUlang1, txtUlang2, txtUlang3, txtNama, txtNo, txtMac;
     CheckBox checkBox;
 
     private Spinner spinner1, spinner2, spinnerUlang, spinnerUlang1, spinnerUlang2;
@@ -63,11 +56,11 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
             ,"33","32","31","30","29","28","27","26","25","24","23","22","21","20","19","18","17","16","15","14",
             "13","12","11","10","9","8","7","6","5","4","3","2","1","0"};
 
-    String[] repeat={"1 Jam","2 Jam","3 Jam","4 Jam"};
+    String[] repeat={"1 Jam","4 Jam","8 Jam","12 Jam"};
 
-    String[] repeat2={"1 Jam","2 Jam","3 Jam","4 Jam"};
+    String[] repeat2={"1 Jam","6 Jam","12 Jam","24 Jam"};
 
-    String[] repeat3={"1","2","3","4"};
+    String[] repeat3={"1","2","3","4","5","6","7"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +78,8 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
         txtUlang2.setVisibility( View.GONE );
         txtUlang3   = (TextView) findViewById( R.id.txtUlang3 );
         txtNama     = (TextView) findViewById( R.id.namaZona );
-        txtNama.setText(sharedPrefManager.getSPEmail());
+        txtNo     = (TextView) findViewById( R.id.noZona );
+        tampilLahan();
         txtMac     = (TextView) findViewById( R.id.macAddress );
         tampilMac();
         myCalendar = Calendar.getInstance();
@@ -198,8 +192,15 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
         } );
     }
 
+    private void tampilLahan(){
+        String namaZona = getIntent().getStringExtra( "namaZona" );
+        String nomor = getIntent().getStringExtra( "nomorZona" );
+        txtNama.setText( namaZona );
+        txtNo.setText(nomor);
+    }
+
     private void tampilMac() {
-        String mac = getIntent().getStringExtra( "mac" );
+        String mac = getIntent().getStringExtra( "MAC" );
         txtMac.setText( mac );
     }
 
@@ -210,7 +211,7 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
     }
 
     private void sukses() {
-        Intent pindah = new Intent( AturJadwalSiram.this, LihatZona.class );
+        Intent pindah = new Intent( AturJadwalSiram.this, MenuUtama.class );
         startActivity( pindah );
         finish();
     }
@@ -220,59 +221,61 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
 
         String waktu1 = spinner1.getSelectedItem().toString();
         String waktu2 = spinner2.getSelectedItem().toString();
-        String nama = txtNama.getText().toString();
+        String nama   = txtNama.getText().toString();
+        String mac = txtMac.getText().toString();
+        String email  = sharedPrefManager.getSPEmail();
 
         String waktuUlang = spinnerUlang.getSelectedItem().toString();
         String waktuUlang1 = spinnerUlang1.getSelectedItem().toString();
         String waktuUlang2 = spinnerUlang2.getSelectedItem().toString();
-        if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "1 Jam" )){
+        if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "24 Jam" )){
+            waktuUlang = "1";
+            waktuUlang2 = "24";
+        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "12 Jam" )){
+            waktuUlang = "1";
+            waktuUlang2 = "12";
+        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "6 Jam" )){
+            waktuUlang = "1";
+            waktuUlang2 = "6";
+        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "1 Jam" )){
             waktuUlang = "1";
             waktuUlang2 = "1";
-        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "2 Jam" )){
-            waktuUlang = "1";
-            waktuUlang2 = "2";
-        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "3 Jam" )){
-            waktuUlang = "1";
-            waktuUlang2 = "3";
-        } else if (waktuUlang.equals( "1 Jam" ) && waktuUlang2.equals( "4 Jam" )){
-            waktuUlang = "1";
-            waktuUlang2 = "4";
-        } else if (waktuUlang.equals( "2 Jam" ) && waktuUlang2.equals( "2 Jam" )){
-            waktuUlang = "2";
-            waktuUlang2 = "2";
-        } else if (waktuUlang.equals( "2 Jam" ) && waktuUlang2.equals( "1 Jam" )){
-            waktuUlang = "2";
-            waktuUlang2 = "1";
-        } else if (waktuUlang.equals( "2 Jam" ) && waktuUlang2.equals( "3 Jam" )){
-            waktuUlang = "2";
-            waktuUlang2 = "3";
-        } else if (waktuUlang.equals( "2 Jam" ) && waktuUlang2.equals( "4 Jam" )){
-            waktuUlang = "2";
-            waktuUlang2 = "4";
-        } else if (waktuUlang.equals( "3 Jam" ) && waktuUlang2.equals( "1 Jam" )){
-            waktuUlang = "3";
-            waktuUlang2 = "1";
-        } else if (waktuUlang.equals( "3 Jam" ) && waktuUlang2.equals( "3 Jam" )){
-            waktuUlang = "3";
-            waktuUlang2 = "3";
-        } else if (waktuUlang.equals( "3 Jam" ) && waktuUlang2.equals( "2 Jam" )){
-            waktuUlang = "3";
-            waktuUlang2 = "2";
-        } else if (waktuUlang.equals( "3 Jam" ) && waktuUlang2.equals( "4 Jam" )){
-            waktuUlang = "3";
-            waktuUlang2 = "4";
         } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "1 Jam" )){
             waktuUlang = "4";
             waktuUlang2 = "1";
-        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "2 Jam" )){
+        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "6 Jam" )){
             waktuUlang = "4";
-            waktuUlang2 = "2";
-        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "3 Jam" )){
+            waktuUlang2 = "6";
+        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "12 Jam" )){
             waktuUlang = "4";
-            waktuUlang2 = "3";
-        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "4 Jam" )){
+            waktuUlang2 = "12";
+        } else if (waktuUlang.equals( "4 Jam" ) && waktuUlang2.equals( "24 Jam" )){
             waktuUlang = "4";
-            waktuUlang2 = "4";
+            waktuUlang2 = "24";
+        } else if (waktuUlang.equals( "8 Jam" ) && waktuUlang2.equals( "1 Jam" )){
+            waktuUlang = "8";
+            waktuUlang2 = "1";
+        } else if (waktuUlang.equals( "8 Jam" ) && waktuUlang2.equals( "6 Jam" )){
+            waktuUlang = "8";
+            waktuUlang2 = "6";
+        } else if (waktuUlang.equals( "8 Jam" ) && waktuUlang2.equals( "12 Jam" )){
+            waktuUlang = "8";
+            waktuUlang2 = "12";
+        } else if (waktuUlang.equals( "8 Jam" ) && waktuUlang2.equals( "24 Jam" )){
+            waktuUlang = "8";
+            waktuUlang2 = "24";
+        } else if (waktuUlang.equals( "12 Jam" ) && waktuUlang2.equals( "1 Jam" )){
+            waktuUlang = "12";
+            waktuUlang2 = "1";
+        } else if (waktuUlang.equals( "12 Jam" ) && waktuUlang2.equals( "6 Jam" )){
+            waktuUlang = "12";
+            waktuUlang2 = "6";
+        } else if (waktuUlang.equals( "12 Jam" ) && waktuUlang2.equals( "12 Jam" )){
+            waktuUlang = "12";
+            waktuUlang2 = "12";
+        } else if (waktuUlang.equals( "12 Jam" ) && waktuUlang2.equals( "24 Jam" )){
+            waktuUlang = "12";
+            waktuUlang2 = "24";
         }
 
         String jamJadwal = edtJam.getText().toString();
@@ -285,19 +288,27 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
         int menit = a * 60000;
         int total = menit + detik;
         String hasil = Integer.toString( total );
-        String pesan = "0011";
+//        String gfgg = getIntent().getStringExtra( "nomorZona" );
+        String pesan = getIntent().getStringExtra( "nomorZona" );
+        if(pesan.equals( "Nomor Zona = 1" )){
+            pesan = "0011";
+        } else if (pesan.equals( "Nomor Zona = 2" )){
+            pesan = "0101";
+        } else if (pesan.equals( "Nomor Zona = 3" )){
+            pesan = "0110";
+        }
 
         if (times1.equals(null) || times2.equals(null) || c>d){
             Toast.makeText( getApplicationContext(),"Gagal mengatur jadwal"+"\n"
                     +"Lama waktu terlalu pendek", Toast.LENGTH_SHORT ).show();
         }else if (checkBox.isChecked()){
             rmq.setupConnectionFactory();
-            rmq.publish( nama+"#"+gb.getRoutingKey()+"#"+pesan+"#"+hasil+
+            rmq.publish( nama+email+"#"+mac+"#"+pesan+"#"+hasil+
                     "#"+waktuUlang1+"#"+waktuUlang2+"#"+waktuUlang+"#"+jamJadwal+"#"+menitJadwal+"#daily");
             Toast.makeText( getApplicationContext(),"Sukses Mengatur Penjadwalan Harian", Toast.LENGTH_SHORT ).show();
         } else {
             rmq.setupConnectionFactory();
-            rmq.publish( nama+"#"+gb.getRoutingKey()+"#"+pesan+"#"+hasil+
+            rmq.publish( nama+email+"#"+mac+"#"+pesan+"#"+hasil+
                     "#"+waktuUlang1+"#"+"0"+"#"+"0"+"#"+jamJadwal+"#"+menitJadwal+"#daily");
             Toast.makeText( getApplicationContext(),"Sukses Mengatur Penjadwalan", Toast.LENGTH_SHORT ).show();
         }

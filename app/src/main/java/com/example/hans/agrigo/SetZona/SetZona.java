@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Set;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -70,6 +71,7 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
                 } else {
                     loading = ProgressDialog.show(SetZona.this,"Loading.....",null,true);
                     suksesSimpan();
+                    pergi();
                 }
             }
         } );
@@ -83,10 +85,10 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
     public void suksesSimpan(){
         String nama  = namaLahan.getText().toString();
         String nomor = spinnerNomor.getSelectedItem().toString();
-        String id  = sharedPrefManager.getSPEmail();
+//        String id  = sharedPrefManager.getSPEmail();
         String mac = macAdd.getText().toString();
 
-        retrofit2.Call<ResponseBody> call = InitRetrofit.getInstance().getApi().regisZona(id,mac,nama,nomor);
+        retrofit2.Call<ResponseBody> call = InitRetrofit.getInstance().getApi().regisZona(mac,nama,nomor);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -94,18 +96,15 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
                     loading.dismiss();
                     try {
                         JSONObject jsonRESULTS = new JSONObject(response.body().string());
-                        if (jsonRESULTS.getString("msg").equals("Berhasil Nambah Zona")) {
+                        if (jsonRESULTS.getString("message").equals("Berhasil")) {
                             Toast.makeText( SetZona.this, " Berhasil Simpan", Toast.LENGTH_SHORT).show();
                             Log.d("responsenya", response.body().toString());
-//                            Intent intent = new Intent(SetZona.this, LihatZona.class);
-//                            startActivity(intent);
-//                            finish();
-                            Intent varIntent = new Intent(SetZona.this, AturJadwalSiram.class);
-                            varIntent.putExtra("mac", mac);
-                            startActivity(varIntent);
+                            Intent intent = new Intent(SetZona.this, MenuUtama.class);
+                            startActivity(intent);
                             finish();
+
                         } else {
-                            String error_message = jsonRESULTS.getString("msg");
+                            String error_message = jsonRESULTS.getString("message");
                             Toast.makeText(SetZona.this, error_message, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
@@ -135,6 +134,12 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
 
             }
         });
+    }
+
+    public void pergi (){
+        Intent pergi = new Intent(SetZona.this, LihatZona.class);
+        startActivity(pergi);
+        finish();
     }
 
     @Override

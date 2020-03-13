@@ -3,36 +3,51 @@ package com.example.hans.agrigo.LihatZona.Support;
 import com.google.gson.annotations.SerializedName;
 
 public class Item_Zona {
-    @SerializedName("zona_name")
-    private String zona_name;
+    @SerializedName("mac")
+    private String mac_address;
 
-    @SerializedName("zona_number")
-    private String zona_number;
+    @SerializedName("_id")
+    private String nama;
+//    @SerializedName("zona")
+//    private String zona;
 
 
-    public void setZona_name(String zona_name){
+    public void setMac(String Mac_address){
 
-        this.zona_name = zona_name;
+        this.mac_address = Mac_address;
     }
 
-    public String getZona_name(){
-        return zona_name;
+    public String getMac_address(){
+        return mac_address;
     }
 
-    public void setZona_number(String zona_number){
 
-        this.zona_number = zona_number;
+
+    public void setNama(String nama){
+
+        this.nama = nama;
     }
 
-    public String getZona_number(){
-        return zona_number;
+    public String getNama(){
+        return nama;
     }
+    public void setZona(String zona){
+
+//        this.zona = zona;
+//    }
+//
+//    public String getZona(){
+//        return zona;
+    }
+
     @Override
     public String toString(){
         return
                 "Item_Zona{" +
-                        "zona_name= '" + zona_name+ '\'' +
-                        ",zona_number= '" + zona_number+ '\'' +
+                        "Mac= '" + mac_address+ '\'' +
+                        ",nama= '" + nama+ '\'' +
+//                        ",zona= '" + zona+ '\'' +
                         "}";
     }
+
 }

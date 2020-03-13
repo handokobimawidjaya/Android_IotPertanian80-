@@ -1,11 +1,12 @@
-package com.example.hans.agrigo.DaftarZona;
+package com.example.hans.agrigo.SiramZona;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,13 +14,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TimePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hans.agrigo.DaftarZona.GlobalVariablee.GlobalVariable;
-import com.example.hans.agrigo.DaftarZona.Helper.RabbitMq;
+import com.example.hans.agrigo.SiramZona.GlobalVariablee.GlobalVariable;
+import com.example.hans.agrigo.SiramZona.Helper.RabbitMq;
 import com.example.hans.agrigo.Menu.MenuUtama;
 import com.example.hans.agrigo.R;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,15 +34,24 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeoutException;
 
+import butterknife.BindView;
+
 public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
     EditText edtTanggal, edtJam;
+    TextView macSiram, nomorSiram, namaZonaSiram;
 
     private Spinner spinner1, spinner2;
     Button btnZona1, btnZona2, btnZona3;
     GlobalVariable gb = new GlobalVariable();
     RabbitMq rmq = new RabbitMq();
+    ConnectionFactory factory = new ConnectionFactory();
+
+    String user = "shadoofpertanian";
+    String pass = "TaniBertani19";
+    String host = "shadoofpertanian.pptik.id";
+    String vhost = "/shadoofpertanian";
 
     String[] times1={"59","58","57","56","55","54","53","52","51","50","49","48","47","46","45","44","43","42","41","40","39",
             "38","37","36","35","34"
@@ -53,8 +66,12 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_siram_zona);
-//        edtTanggal = (EditText)findViewById( R.id.tanggalZona );
-//        edtJam     = (EditText)findViewById( R.id.jamZona );
+
+        macSiram = (TextView) findViewById(R.id.macSiram);
+        nomorSiram = (TextView) findViewById(R.id.nomorSiram);
+        namaZonaSiram = (TextView) findViewById(R.id.namaZonaSiram);
+        tampil();
+
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -68,89 +85,13 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
             }
         };
 
-//        edtTanggal.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                new DatePickerDialog( SiramZona.this, date, myCalendar
-//                        .get( Calendar.YEAR ), myCalendar.get( Calendar.MONTH ),
-//                        myCalendar.get( Calendar.DAY_OF_MONTH ) ).show();
-//            }
-//        });
-//
-//        edtJam.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                Calendar mcurrentTime = Calendar.getInstance();
-//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-//                int minute = mcurrentTime.get(Calendar.MINUTE);
-//                TimePickerDialog mTimePicker;
-//                mTimePicker = new TimePickerDialog(SiramZona.this, new TimePickerDialog.OnTimeSetListener() {
-//
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                        edtJam.setText(selectedHour + ":" + selectedMinute);
-//                    }
-//                }, hour, minute, true);//Yes 24 hour time
-//                mTimePicker.setTitle("Select Time");
-//                mTimePicker.show();
-//            }
-//        } );
-
         btnZona1 = (Button) findViewById( R.id.btnZona1 );
         btnZona1.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    rmq.setupConnectionFactory();
+                    setupConnectionFactory();
                     zona1();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } );
-
-        btnZona2 = (Button) findViewById( R.id.btnZona2 );
-        btnZona2.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    rmq.setupConnectionFactory();
-                    zona2();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } );
-
-        btnZona3 = (Button) findViewById( R.id.btnZona3 );
-        btnZona3.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    rmq.setupConnectionFactory();
-                    zona3();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (NoSuchAlgorithmException e) {
@@ -181,6 +122,17 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
 
     }
 
+    private void tampil() {
+        String namaZona = getIntent().getStringExtra( "NamaZona" );
+        String nomor = getIntent().getStringExtra( "NomorZona" );
+        String mac = getIntent().getStringExtra( "mAC" );
+        namaZonaSiram.setText( namaZona );
+        nomorSiram.setText(nomor);
+        macSiram.setText(mac);
+    }
+
+
+
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -191,6 +143,14 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
             KeyManagementException, TimeoutException, URISyntaxException, IOException{
         String waktu1 = spinner1.getSelectedItem().toString();
         String waktu2 = spinner2.getSelectedItem().toString();
+        String pesan  = nomorSiram.getText().toString();
+        if(pesan.equals( "Nomor Zona = 1" )){
+            pesan = "0011";
+        } else if (pesan.equals( "Nomor Zona = 2" )){
+            pesan = "0101";
+        } else if (pesan.equals( "Nomor Zona = 3" )){
+            pesan = "0110";
+        }
 
         int a = Integer.parseInt( waktu1 );
         int b = Integer.parseInt( waktu2 );
@@ -205,51 +165,33 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
             Toast.makeText( getApplicationContext(),"Sukses", Toast.LENGTH_SHORT ).show();
         }
 
-        String pesan = "0011";
-        rmq.publish( pesan+"#"+total);
+        publish( pesan+"#"+total);
+//        Toast.makeText(this, ""+pesan+"#"+total, Toast.LENGTH_SHORT).show();
+
     }
-    private void zona2() throws InterruptedException, NoSuchAlgorithmException,
-            KeyManagementException, TimeoutException, URISyntaxException, IOException{
-        String waktu1 = spinner1.getSelectedItem().toString();
-        String waktu2 = spinner2.getSelectedItem().toString();
-
-        int a = Integer.parseInt( waktu1 );
-        int b = Integer.parseInt( waktu2 );
-        int detik = b * 1000;
-        int menit = a * 1000;
-        int total = menit + detik;
-
-
-        if (times1.equals(null)){
-            Toast.makeText( getApplicationContext(),"gagal", Toast.LENGTH_SHORT ).show();
-        } else {
-            Toast.makeText( getApplicationContext(),"Sukses", Toast.LENGTH_SHORT ).show();
+    public void setupConnectionFactory() {
+        try {
+            factory.setAutomaticRecoveryEnabled(false);
+            factory.setUri("amqp://"+user+":"+pass+"@"+host);
+            factory.setVirtualHost(vhost);
+        } catch (KeyManagementException | NoSuchAlgorithmException | URISyntaxException e1) {
+            e1.printStackTrace();
         }
-
-        String pesan = "0101";
-        rmq.publish( pesan+"#"+total);
     }
-    private void zona3() throws InterruptedException, NoSuchAlgorithmException,
-            KeyManagementException, TimeoutException, URISyntaxException, IOException{
-        String waktu1 = spinner1.getSelectedItem().toString();
-        String waktu2 = spinner2.getSelectedItem().toString();
 
-        int a = Integer.parseInt( waktu1 );
-        int b = Integer.parseInt( waktu2 );
-        int detik = b * 1000;
-        int menit = a * 1000;
-        int total = menit + detik;
-
-
-        if (times1.equals(null)){
-            Toast.makeText( getApplicationContext(),"gagal", Toast.LENGTH_SHORT ).show();
-        } else {
-            Toast.makeText( getApplicationContext(),"Sukses", Toast.LENGTH_SHORT ).show();
-        }
-
-        String pesan = "0110";
-        rmq.publish( pesan+"#"+total);
+    public  void  publish(String message) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException, InterruptedException {
+        String macAddres =macSiram.getText().toString();
+        String queue_name_publish ="mqtt-subscription-"+macAddres+"qos0";
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Connection connection = factory.newConnection();
+        Log.d("ConnectionRMQ", "publish: "+connection.isOpen());
+        Channel channel = connection.createChannel();
+        Log.d("ChannelRMQ", "publish: "+channel.isOpen());
+        String messageOn = message ;
+        channel.basicPublish("", queue_name_publish,null,messageOn.getBytes());
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {

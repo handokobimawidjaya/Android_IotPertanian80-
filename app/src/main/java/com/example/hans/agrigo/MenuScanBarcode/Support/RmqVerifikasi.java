@@ -6,7 +6,7 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.util.Log;
 
-import com.example.hans.agrigo.DaftarZona.GlobalVariablee.GlobalVariable;
+import com.example.hans.agrigo.SiramZona.GlobalVariablee.GlobalVariable;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
