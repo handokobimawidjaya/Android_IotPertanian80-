@@ -23,6 +23,7 @@ import com.example.hans.agrigo.Network.InitRetrofit;
 import com.example.hans.agrigo.Network.NetworkService;
 import com.example.hans.agrigo.R;
 import com.example.hans.agrigo.Storage.SharedPrefManager;
+import com.example.hans.agrigo.TriggerSiram.TriggerWaterLevel;
 import com.example.hans.agrigo.configwifi.wifi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchFragment extends Fragment{
-    FloatingActionButton menuAktivasi;
+    FloatingActionButton menuAktivasi, menuTrigger;
     private RecyclerView recyclerView;
     SharedPrefManager sharedPrefManager;
     @Nullable
@@ -53,6 +54,16 @@ public class SearchFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent aktivasi = new Intent(getActivity(), wifi.class);
+                startActivity(aktivasi);
+                getActivity().finish();
+            }
+        });
+
+        menuTrigger = (FloatingActionButton) root.findViewById(R.id.configWater);
+        menuTrigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent aktivasi = new Intent(getActivity(), TriggerWaterLevel.class);
                 startActivity(aktivasi);
                 getActivity().finish();
             }

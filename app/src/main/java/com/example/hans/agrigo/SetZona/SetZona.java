@@ -93,7 +93,7 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
-                    loading.dismiss();
+//                    loading.dismiss();
                     try {
                         JSONObject jsonRESULTS = new JSONObject(response.body().string());
                         if (jsonRESULTS.getString("message").equals("Berhasil")) {
@@ -137,7 +137,7 @@ public class SetZona extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     public void pergi (){
-        Intent pergi = new Intent(SetZona.this, LihatZona.class);
+        Intent pergi = new Intent(SetZona.this, MenuUtama.class);
         startActivity(pergi);
         finish();
     }

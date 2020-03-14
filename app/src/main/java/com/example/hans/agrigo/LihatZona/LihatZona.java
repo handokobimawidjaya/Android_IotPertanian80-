@@ -267,7 +267,7 @@ public class LihatZona extends AppCompatActivity {
                                 String zona_number =obb.getString("zona_number");
                                 String zona_name =obb.getString("zona_name");
                                 Zonanama.setText(zona_name);
-                                Zonanumber.setText("Nomor Zona"+zona_number);
+                                Zonanumber.setText(zona_number);
                                 Nomor=obb.getString("zona_number");
                                 if (Zonanama.equals("")|| Zonanumber.equals("")) {
                                     satu.setVisibility(View.GONE);
@@ -279,7 +279,7 @@ public class LihatZona extends AppCompatActivity {
                                 String zona_number1 =obb1.getString("zona_number");
                                 String zona_name1 =obb1.getString("zona_name");
                                 Zonanama2.setText(zona_name1);
-                                Zonanumber2.setText("Nomor Zona = "+zona_number1);
+                                Zonanumber2.setText(zona_number1);
                                 if (Zonanama2.equals("")|| Zonanumber2.equals("")) {
                                     dua.setVisibility(View.GONE);
                                 }else {
@@ -289,7 +289,7 @@ public class LihatZona extends AppCompatActivity {
                                 String zona_number2 =obb1.getString("zona_number");
                                 String zona_name2 =obb1.getString("zona_name");
                                 Zonanama3.setText(zona_name2);
-                                Zonanumber3.setText("Nomor Zona= "+zona_number2);
+                                Zonanumber3.setText(zona_number2);
                                 Log.d("zona",zona_number);
                                 Log.d("zona:",zona_name);
                                 Log.d("zona:",zona_number1);

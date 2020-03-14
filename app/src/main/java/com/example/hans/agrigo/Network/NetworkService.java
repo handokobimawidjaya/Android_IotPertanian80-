@@ -8,6 +8,7 @@ Bandung 2020
 
 import android.renderscript.Sampler;
 
+import com.example.hans.agrigo.Config.Response_Config;
 import com.example.hans.agrigo.Config.Response_Device;
 import com.example.hans.agrigo.LihatZona.Support.ResponZona;
 import com.example.hans.agrigo.MenuLogin.Login_Response;
@@ -55,8 +56,8 @@ public interface NetworkService {
             @Field("alamat") String d_alamat,
             @Field("email") String d_email,
             @Field("password") String d_password,
-            @Field("latitude") String d_lat,
-            @Field("longitude") String d_long
+            @Field("latitude") double d_lat,
+            @Field("longitude") double d_long
     );
 
     //   device
@@ -74,7 +75,7 @@ public interface NetworkService {
             @Field("userId") String UserId,
             @Field("mac") String d_mac,
             @Field("deviceCode") String d_code,
-            @Field("guid") String guid
+            @Field("guid_id") String guid
     );
 
     @FormUrlEncoded
@@ -110,5 +111,23 @@ public interface NetworkService {
     Call<ResponseBody>flow(
             @Field("mac") String d_mac
     );
+
+    @FormUrlEncoded
+    @POST("ambil/addConfig")
+    Call<ResponseBody>Simpan_Config(
+            @Field("mac_actuator") String d_act,
+            @Field("mac_sensor") String d_ss,
+            @Field("value_on") String d_on,
+            @Field("value_off") String _off,
+            @Field("guid") String d_guid
+    );
+
+    @FormUrlEncoded
+    @POST("ambil/getAct")
+    Call<Response_Config>getDeviceAktivasi(
+            @Field("guid") String d_guid,
+            @Field("devices_type") String d_tipe
+    );
+
 }
 

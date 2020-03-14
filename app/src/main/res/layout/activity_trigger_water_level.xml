@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bgHeader"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:background="@drawable/header_login"
         android:elevation="5dp" />
     <TextView
@@ -22,7 +22,7 @@
         android:text="IC-Shadoof"
         android:textColor="@color/white"
         android:textStyle="italic"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
@@ -33,7 +33,19 @@
         android:elevation="5dp"
         android:text="Perintah Menyiram"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/setmac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLogin"
+        android:transitionName="tvLogin"
+        android:layout_alignLeft="@+id/tvDesc"
+        android:elevation="5dp"
+        android:text="Mac "
+        android:textColor="@color/white"
+        android:textSize="15sp"
         android:textStyle="bold" />
     <ImageView
         android:id="@+id/circle1"
@@ -103,6 +115,8 @@
                         android:layout_height="wrap_content"
                         android:text="Actuator :"
                         android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
                     <LinearLayout
@@ -124,9 +138,11 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/gone0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Trigger :"
+                        android:text="Trigger Sensor:"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
@@ -151,31 +167,64 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kondisi :"
+                        android:text="Input Kondisi :"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="17sp"
+                        android:layout_marginLeft="10dp"
                         android:textStyle="bold"/>
                     <LinearLayout
+                        android:id="@+id/gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kondisi Hidup :"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
                         <Spinner
-                            android:id="@+id/spinnerKondisi"
-                            android:layout_width="match_parent"
+                            android:id="@+id/nilaiSensor"
+                            android:layout_width="150dp"
                             android:layout_height="45sp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="30dp"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textAlignment="center"
+                            android:padding="5dp"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/gone1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kondisi Mati :"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+                        <Spinner
+                            android:id="@+id/nilaiSensor2"
+                            android:layout_width="150dp"
+                            android:layout_height="45sp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginBottom="10dp"
                             android:textAlignment="center"
                             android:padding="5dp"
                             android:gravity="center_horizontal" />
-
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnZona1"
+                        android:id="@+id/Simpan_config"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"

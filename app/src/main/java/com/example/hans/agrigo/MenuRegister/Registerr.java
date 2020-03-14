@@ -66,7 +66,8 @@ public class Registerr extends AppCompatActivity{
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private FusedLocationProviderClient mFusedLocationClient;
     protected Location mLastLocation;
-    String Latitude,Longitude;
+    double Latitude;
+    double Longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class Registerr extends AppCompatActivity{
                     showSnackbar();
                 } else {
                     loading = ProgressDialog.show(Registerr.this,"Loading.....",null,true);
-                Signup();
+                    Signup();
                 }
             }
         });
@@ -112,8 +113,8 @@ public class Registerr extends AppCompatActivity{
         String Almat = String.valueOf(alamat.getText());
         String Email= String.valueOf(email.getText());
         String Password = String.valueOf(password.getText());
-        String Lat=Latitude;
-        String Long=Longitude;
+        double Lat=Latitude;
+        double Long=Longitude;
 
         retrofit2.Call<ResponseBody> call = InitRetrofit.getInstance().getApi().RegsiterUser(guid,Nik,Nama,No_tlp,Almat,Email,Password,Lat,Long);
         call.enqueue(new Callback<ResponseBody>() {
@@ -124,7 +125,7 @@ public class Registerr extends AppCompatActivity{
                     try {
                         JSONObject jsonRESULTS = new JSONObject(response.body().string());
                         if (jsonRESULTS.getString("msg").equals("Berhasil Registrasi")) {
-                    Toast.makeText(Registerr.this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registerr.this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show();
                             Log.d("responsenya", response.body().toString());
                             Intent intent = new Intent(Registerr.this, Login.class);
                             startActivity(intent);
@@ -186,112 +187,108 @@ public class Registerr extends AppCompatActivity{
         snackbar.show();
     }
 
-        @SuppressWarnings("MissingPermission")
-        private void getLastLocation() {
-            mFusedLocationClient.getLastLocation()
-                    .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mLastLocation = task.getResult();
+                            Latitude=mLastLocation.getLatitude();
+                            Longitude=mLastLocation.getLongitude();
+                        } else {
+                            Log.w(TAG, "getLastLocation:exception", task.getException());
+                            showSnackbar(getString(R.string.no_location_detected));
+                        }
+                    }
+                });
+    }
+
+    private void showSnackbar(final String text) {
+        View container = findViewById(R.id.Register);
+        if (container != null) {
+            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private void showSnackbar(final int mainTextStringId, final int actionStringId,
+                              View.OnClickListener listener) {
+        Snackbar.make(findViewById(android.R.id.content),
+                getString(mainTextStringId),
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(actionStringId), listener).show();
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(Registerr.this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                REQUEST_PERMISSIONS_REQUEST_CODE);
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+
+            showSnackbar(R.string.no_location_detected, android.R.string.ok,
+                    new View.OnClickListener() {
                         @Override
-                        public void onComplete(@NonNull Task<Location> task) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                mLastLocation = task.getResult();
-                                Latitude=(String.format(Locale.ENGLISH, "%s: %f",
-                                        "Latitude ",
-                                        mLastLocation.getLatitude()));
-                                Longitude=(String.format(Locale.ENGLISH, "%s: %f",
-                                        "Longitude ",
-                                        mLastLocation.getLongitude()));
-                            } else {
-                                Log.w(TAG, "getLastLocation:exception", task.getException());
-                                showSnackbar(getString(R.string.no_location_detected));
-                            }
+                        public void onClick(View view) {
+                            // Request permission
+                            startLocationPermissionRequest();
                         }
                     });
+
+        } else {
+            Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            startLocationPermissionRequest();
         }
+    }
 
-        private void showSnackbar(final String text) {
-            View container = findViewById(R.id.Register);
-            if (container != null) {
-                Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
-            }
-        }
-
-        private void showSnackbar(final int mainTextStringId, final int actionStringId,
-        View.OnClickListener listener) {
-            Snackbar.make(findViewById(android.R.id.content),
-                    getString(mainTextStringId),
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(actionStringId), listener).show();
-        }
-
-        private boolean checkPermissions() {
-            int permissionState = ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION);
-            return permissionState == PackageManager.PERMISSION_GRANTED;
-        }
-
-        private void startLocationPermissionRequest() {
-            ActivityCompat.requestPermissions(Registerr.this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-
-        private void requestPermissions() {
-            boolean shouldProvideRationale =
-                    ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION);
-
-            // Provide an additional rationale to the user. This would happen if the user denied the
-            // request previously, but didn't check the "Don't ask again" checkbox.
-            if (shouldProvideRationale) {
-                Log.i(TAG, "Displaying permission rationale to provide additional context.");
-
-                showSnackbar(R.string.no_location_detected, android.R.string.ok,
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        Log.i(TAG, "onRequestPermissionResult");
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length <= 0) {
+                // If user interaction was interrupted, the permission request is cancelled and you
+                // receive empty arrays.
+                Log.i(TAG, "User interaction was cancelled.");
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+                getLastLocation();
+            } else {
+                showSnackbar(R.string.permission_denied_explanation, R.string.settings,
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                // Request permission
-                                startLocationPermissionRequest();
+                                // Build intent that displays the App settings screen.
+                                Intent intent = new Intent();
+                                intent.setAction(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null);
+                                intent.setData(uri);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         });
-
-            } else {
-                Log.i(TAG, "Requesting permission");
-                // Request permission. It's possible this can be auto answered if device policy
-                // sets the permission in a given state or the user denied the permission
-                // previously and checked "Never ask again".
-                startLocationPermissionRequest();
             }
         }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-        @NonNull int[] grantResults) {
-            Log.i(TAG, "onRequestPermissionResult");
-            if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-                if (grantResults.length <= 0) {
-                    // If user interaction was interrupted, the permission request is cancelled and you
-                    // receive empty arrays.
-                    Log.i(TAG, "User interaction was cancelled.");
-                } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted.
-                    getLastLocation();
-                } else {
-                    showSnackbar(R.string.permission_denied_explanation, R.string.settings,
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    // Build intent that displays the App settings screen.
-                                    Intent intent = new Intent();
-                                    intent.setAction(
-                                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    Uri uri = Uri.fromParts("package",
-                                            BuildConfig.APPLICATION_ID, null);
-                                    intent.setData(uri);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                }
-                            });
-                }
-            }
-        }
+    }
 }

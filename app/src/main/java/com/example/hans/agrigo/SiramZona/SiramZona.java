@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hans.agrigo.LihatZona.LihatZona;
 import com.example.hans.agrigo.SiramZona.GlobalVariablee.GlobalVariable;
 import com.example.hans.agrigo.SiramZona.Helper.RabbitMq;
 import com.example.hans.agrigo.Menu.MenuUtama;
@@ -144,11 +145,11 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
         String waktu1 = spinner1.getSelectedItem().toString();
         String waktu2 = spinner2.getSelectedItem().toString();
         String pesan  = nomorSiram.getText().toString();
-        if(pesan.equals( "Nomor Zona = 1" )){
+        if(pesan.equals( "1" )){
             pesan = "0011";
-        } else if (pesan.equals( "Nomor Zona = 2" )){
+        } else if (pesan.equals( "2" )){
             pesan = "0101";
-        } else if (pesan.equals( "Nomor Zona = 3" )){
+        } else if (pesan.equals( "3" )){
             pesan = "0110";
         }
 
@@ -166,6 +167,7 @@ public class SiramZona extends AppCompatActivity implements AdapterView.OnItemSe
         }
 
         publish( pesan+"#"+total);
+        Log.d("pesan",pesan+"#"+total);
 //        Toast.makeText(this, ""+pesan+"#"+total, Toast.LENGTH_SHORT).show();
 
     }

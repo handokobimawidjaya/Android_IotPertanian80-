@@ -158,7 +158,7 @@ public class AddDevice extends AppCompatActivity implements View.OnClickListener
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             mac = jsonobject.getString("mac");
-                            Type = jsonobject.getString("devicestype");
+                            Type = jsonobject.getString("devicetype");
                             RegisterDevice();
 //                                    Log.d("device", String.valueOf(jsonarray));
                             Log.d("isi:",mac+Type);

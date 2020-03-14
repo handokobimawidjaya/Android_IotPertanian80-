@@ -107,7 +107,7 @@
                     android:layout_marginRight="5dp"
                     android:paddingBottom="50dp" />
             </androidx.cardview.widget.CardView>
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/iii"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -115,7 +115,34 @@
                 android:layout_alignLeft="@+id/cv"
                 android:layout_alignRight="@+id/cv"
                 android:layout_marginTop="1.0dp"
-                android:gravity="bottom|end">
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/configWater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_below="@id/cv"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_marginLeft="10dp"
+                    android:text="+"
+                    app:fabSize="normal"
+                    android:backgroundTint="@color/alertInfoFontColor"
+                    app:elevation="6dp"
+                    app:fabCustomSize="80dp"
+                    android:textColor="@color/bg"
+                    android:src="@drawable/ic_settings" />
+            <LinearLayout
+                android:id="@+id/ii"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/cv"
+                android:layout_alignLeft="@+id/cv"
+                android:layout_alignRight="@+id/cv"
+                android:layout_marginTop="1.0dp"
+                android:gravity="bottom|end"
+                android:orientation="horizontal">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/menuWifi"
@@ -129,9 +156,9 @@
                     app:elevation="6dp"
                     app:fabCustomSize="80dp"
                     android:textColor="@color/bg"
-                    android:src="@android:drawable/ic_input_add" />
-
-            </RelativeLayout>
+                    android:src="@drawable/ic_add" />
+            </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

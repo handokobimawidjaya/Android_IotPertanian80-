@@ -42,10 +42,14 @@ public class AdapterDevice extends RecyclerView.Adapter<AdapterDevice.MyViewHold
         // Set widget
         holder.nama.setText(menu.get(position).getNama());
         String a = holder.nama.getText().toString();
-//        holder.nama.getText().toString();
         if (a.equals("watering") || a.equals("Watering")) {
             holder.history.setVisibility(View.GONE);
         } else if (a.equals("sensor") || a.equals("Sensor")) {
+            holder.add.setVisibility(View.GONE);
+            holder.zona.setVisibility(View.GONE);
+        } else if (a.equals("Kelembaban") || a.equals("Water Flow")|| a.equals("water flow")|| a.equals("Water Level")
+                || a.equals("water level")|| a.equals("Water_Flow")|| a.equals("water_flow")|| a.equals("soil")|| a.equals("Soil")
+                || a.equals("WaterFlow")|| a.equals("Soil")|| a.equals("Water_Level")) {
             holder.add.setVisibility(View.GONE);
             holder.zona.setVisibility(View.GONE);
         }

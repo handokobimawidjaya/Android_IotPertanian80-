@@ -2,8 +2,7 @@ package com.example.hans.agrigo.Config;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Item_Device {
-
+public class Item_Config {
     @SerializedName("mac")
     private String mac;
 
@@ -12,6 +11,9 @@ public class Item_Device {
 
     @SerializedName("devices_code")
     private String code;
+
+    @SerializedName("devices_type")
+    private String type;
 
 
     public void setMac(String mac){
@@ -42,13 +44,28 @@ public class Item_Device {
         return code;
     }
 
+
+    public void setType(String type){
+
+        this.type = type;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+
+
+
+
     @Override
     public String toString(){
         return
-                "Item_Device{" +
+                "Item_Config{" +
                         "Mac= '" + mac+ '\'' +
                         "Code= '" + code+ '\'' +
                         ",nama= '" + nama+ '\'' +
+                        ",type= '" + type+ '\'' +
                         "}";
     }
 

@@ -16,7 +16,8 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/textPassword"
-        android:text="password"
+        android:hint="Input Password"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textSSID1"
@@ -24,8 +25,14 @@
 
     <Button
         android:id="@+id/okButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textPassword"
-        android:text="Sambungkan"/>
+        android:background="@drawable/bg_ui"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:text="Sambungkan"
+        android:textColor="@color/white"/>
 </RelativeLayout>

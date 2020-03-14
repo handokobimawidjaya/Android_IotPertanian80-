@@ -21,8 +21,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="25dp"
         android:elevation="5dp"
-        android:textStyle="bold"
-        android:text="Please Compare"
+        android:textStyle="italic"
+        android:text="@string/app_name"
         android:textColor="@color/colorWhite"
         android:textSize="20sp" />
 
@@ -34,7 +34,7 @@
         android:transitionName="tvLogin"
         android:layout_alignLeft="@+id/tvDesc"
         android:elevation="5dp"
-        android:text="Your Device..."
+        android:text="Aktivasi Device"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
         android:textStyle="bold" />
