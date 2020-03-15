@@ -290,11 +290,11 @@ public class AturJadwalSiram extends AppCompatActivity implements AdapterView.On
         String hasil = Integer.toString( total );
 //        String gfgg = getIntent().getStringExtra( "nomorZona" );
         String pesan = getIntent().getStringExtra( "nomorZona" );
-        if(pesan.equals( "Nomor Zona = 1" )){
+        if(pesan.equals( "1" )){
             pesan = "0011";
-        } else if (pesan.equals( "Nomor Zona = 2" )){
+        } else if (pesan.equals( "2" )){
             pesan = "0101";
-        } else if (pesan.equals( "Nomor Zona = 3" )){
+        } else if (pesan.equals( "3" )){
             pesan = "0110";
         }
 

@@ -259,8 +259,6 @@ public class LihatZona extends AppCompatActivity {
                             Log.d("zona:",zona);
                             JSONArray ray=new JSONArray(zona);
                             Log.d("response api", response.body().toString());
-
-
                             ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
                             for (int j = 0; j < ray.length(); j++) {
                                 JSONObject obb = ray.getJSONObject(0);
@@ -268,7 +266,7 @@ public class LihatZona extends AppCompatActivity {
                                 String zona_name =obb.getString("zona_name");
                                 Zonanama.setText(zona_name);
                                 Zonanumber.setText(zona_number);
-                                Nomor=obb.getString("zona_number");
+//                                Nomor=obb.getString("zona_number");
                                 if (Zonanama.equals("")|| Zonanumber.equals("")) {
                                     satu.setVisibility(View.GONE);
                                 }else {
@@ -285,9 +283,9 @@ public class LihatZona extends AppCompatActivity {
                                 }else {
                                     dua.setVisibility(View.VISIBLE);
                                 }
-                                JSONObject obb2 = ray.getJSONObject(1);
-                                String zona_number2 =obb1.getString("zona_number");
-                                String zona_name2 =obb1.getString("zona_name");
+                                JSONObject obb2 = ray.getJSONObject(2);
+                                String zona_number2 =obb2.getString("zona_number");
+                                String zona_name2 =obb2.getString("zona_name");
                                 Zonanama3.setText(zona_name2);
                                 Zonanumber3.setText(zona_number2);
                                 Log.d("zona",zona_number);

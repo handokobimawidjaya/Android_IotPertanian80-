@@ -77,7 +77,6 @@ public class TriggerWaterLevel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trigger_water_level);
 
-        mac =  (TextView) findViewById(R.id.setmac);
         Act = (Spinner) findViewById(R.id.spinnerAct);
         Ss = (Spinner) findViewById(R.id.spinnerSS);
         value1 = (Spinner) findViewById(R.id.nilaiSensor);
@@ -257,10 +256,10 @@ public class TriggerWaterLevel extends AppCompatActivity {
             @Override
             public void onFailure(Call<Response_Config> call, Throwable t) {
                 try {
-//                    satu.setVisibility(View.GONE);
-//                    dua.setVisibility(View.GONE);
-//                    tiga.setVisibility(View.GONE);
-//                    Simpan.setVisibility(View.GONE);
+                    satu.setVisibility(View.GONE);
+                    dua.setVisibility(View.GONE);
+                    tiga.setVisibility(View.GONE);
+                    Simpan.setVisibility(View.GONE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -318,10 +317,10 @@ public class TriggerWaterLevel extends AppCompatActivity {
             @Override
             public void onFailure(Call<Response_Config> call, Throwable t) {
                 try {
-//                    satu.setVisibility(View.GONE);
-//                    dua.setVisibility(View.GONE);
-//                    tiga.setVisibility(View.GONE);
-//                    Simpan.setVisibility(View.GONE);
+                    satu.setVisibility(View.GONE);
+                    dua.setVisibility(View.GONE);
+                    tiga.setVisibility(View.GONE);
+                    Simpan.setVisibility(View.GONE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -344,9 +343,11 @@ public class TriggerWaterLevel extends AppCompatActivity {
                         Loading.dismiss();
                     try {
                         JSONObject jsonRESULTS = new JSONObject(response.body().string());
-                        if (jsonRESULTS.getString("msg").equals("Berhasil")) {
+                        if (jsonRESULTS.getString("msg").equals("Berhasil")
+//                                || d_act.equals("Watering") && d_ss.equals("Sensor Soil")
+//                                || d_act.equals("Selenoid Level") && d_ss.equals("Water Level")
+                        ) {
                             Toast.makeText(TriggerWaterLevel.this, "Pengaturan Trigger Berhasil", Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(TriggerWaterLevel.this, ""+d_on, Toast.LENGTH_SHORT).show();
                             publishtrue();
                             Intent intent = new Intent(TriggerWaterLevel.this, MenuUtama.class);
                             startActivity(intent);
@@ -361,16 +362,6 @@ public class TriggerWaterLevel extends AppCompatActivity {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
-//                        } catch (NoSuchAlgorithmException e) {
-//                            e.printStackTrace();
-//                        } catch (URISyntaxException e) {
-//                            e.printStackTrace();
-//                        } catch (TimeoutException e) {
-//                            e.printStackTrace();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        } catch (KeyManagementException e) {
-//                            e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(TriggerWaterLevel.this, "Gagal, Ulangi Kembali", Toast.LENGTH_SHORT).show();

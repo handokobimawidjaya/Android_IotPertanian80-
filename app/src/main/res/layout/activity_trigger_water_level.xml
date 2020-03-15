@@ -35,18 +35,6 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold" />
-    <TextView
-        android:id="@+id/setmac"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLogin"
-        android:transitionName="tvLogin"
-        android:layout_alignLeft="@+id/tvDesc"
-        android:elevation="5dp"
-        android:text="Mac "
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold" />
     <ImageView
         android:id="@+id/circle1"
         android:layout_width="134dp"
